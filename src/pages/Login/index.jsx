@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { LoginUser } from "../../calls/users";
+import { LoginUser } from "../../calls/user";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ const Login = () => {
           type: "success",
           content: response.message,
         });
+        localStorage.setItem("token", response.data);
         navigate("/");
       } else {
         messageApi.open({

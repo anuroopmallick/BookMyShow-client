@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { Link } from "react-router-dom";
-import { RegisterUser } from "../../calls/users";
+import { RegisterUser } from "../../calls/user";
 
 const index = () => {
   const [messageApi, contextHolder] = message.useMessage();
