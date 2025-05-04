@@ -101,7 +101,7 @@ const ShowModal = ({
   const handleDelete = async (showId) => {
     try {
       dispatch(showLoading());
-      const response = await deleteShow({ showId: showId });
+      const response = await deleteShow(showId);
       if (response.success) {
         message.success(response.message);
         getData();
@@ -138,7 +138,7 @@ const ShowModal = ({
       title: "Movie",
       dataIndex: "movie",
       render: (text, data) => {
-        return data.movie.title;
+        return data.movie.name;
       },
     },
     {
@@ -315,7 +315,7 @@ const ShowModal = ({
                   <Form.Item
                     label="Select the Movie"
                     htmlFor="movie"
-                    name="movie"
+                    name="movie.name"
                     className="d-block"
                     rules={[{ required: true, message: "Movie  is required!" }]}
                   >
