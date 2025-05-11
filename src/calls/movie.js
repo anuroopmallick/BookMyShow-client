@@ -9,6 +9,15 @@ export const getAllMovies = async () => {
   }
 };
 
+export const getMovie = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/api/movies/${id}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const addMovie = async (value) => {
   try {
     const response = await axiosInstance.post("/api/movies", value);

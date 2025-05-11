@@ -315,7 +315,7 @@ const ShowModal = ({
                   <Form.Item
                     label="Select the Movie"
                     htmlFor="movie"
-                    name="movie.name"
+                    name="movie"
                     className="d-block"
                     rules={[{ required: true, message: "Movie  is required!" }]}
                   >
