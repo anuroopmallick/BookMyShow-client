@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../calls/user";
+import { useDispatch, useSelector } from "react-redux";
+import { hideLoading, showLoading } from "../../redux/loaderSlice";
+import { GetCurrentUser } from "../../calls/user";
+import { setUser } from "../../redux/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
+  const dispatch = useDispatch();
+  const { user } = useSelector((store) => {
+    return store.users;
+  });
 
   const onFinish = async (values) => {
     try {
@@ -17,7 +25,15 @@ const Login = () => {
           content: response.message,
         });
         localStorage.setItem("token", response.data);
-        navigate("/");
+        let userRole = await getValidUser();
+
+        if (userRole.data.role === "admin") {
+          navigate("/admin");
+        } else if (userRole.data.role === "partner") {
+          navigate("/partner");
+        } else {
+          navigate("/");
+        }
       } else {
         messageApi.open({
           type: "error",
@@ -29,6 +45,20 @@ const Login = () => {
         type: "error",
         content: error.message,
       });
+    }
+  };
+
+  const getValidUser = async () => {
+    try {
+      dispatch(showLoading());
+      const response = await GetCurrentUser();
+      dispatch(setUser(response.data));
+      dispatch(hideLoading());
+      return response;
+      // Hide Loader
+    } catch (error) {
+      dispatch(setUser(null));
+      message.error(error.message);
     }
   };
 

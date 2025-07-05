@@ -31,7 +31,7 @@ const TheatresTable = () => {
 
   const handleStatusChange = async (theatre) => {
     try {
-      dispatch(showLoading);
+      dispatch(showLoading());
       const theatreId = theatre._id;
       let values = { ...theatre, isActive: !theatre.isActive };
       const response = await updateTheatre(theatreId, values);

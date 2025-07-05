@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { GetCurrentUser } from "../calls/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { message, Layout, Menu } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/userSlice";
 import { hideLoading, showLoading } from "../redux/loaderSlice";
+import { GetCurrentUser } from "../calls/user";
 import { Header } from "antd/es/layout/layout";
 import {
   HomeOutlined,
@@ -12,12 +13,13 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { setUser } from "../redux/userSlice";
+import PageNotFound from "../pages/Page-not-found/PageNotFound";
 
 function ProtectedRoute({ children }) {
   const { user } = useSelector((store) => {
     return store.users;
   });
+  const location = useLocation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,6 +59,7 @@ function ProtectedRoute({ children }) {
               to="/login"
               onClick={() => {
                 localStorage.removeItem("token");
+                dispatch(setUser(null));
               }}
             >
               Log Out
@@ -68,12 +71,22 @@ function ProtectedRoute({ children }) {
     },
   ];
 
+  const roleBasedRoutes = {
+    admin: ["/", "/admin", "/profile"],
+    partner: ["/", "/partner", "/profile"],
+    user: ["/", "/movie", "/book-show", "/profile"],
+  };
+
+  let path = "/" + location.pathname.split("/")[1];
+  let isAllowed = roleBasedRoutes[user?.role]?.includes(path);
+
   const getValidUser = async () => {
     try {
       dispatch(showLoading());
       const response = await GetCurrentUser();
       dispatch(setUser(response.data));
       dispatch(hideLoading());
+      return response;
       // Hide Loader
     } catch (error) {
       dispatch(setUser(null));
@@ -111,7 +124,7 @@ function ProtectedRoute({ children }) {
             <Menu theme="dark" mode="horizontal" items={navItems} />
           </Header>
           <div style={{ padding: 24, minHeight: 380, background: "#fff" }}>
-            {children}
+            {isAllowed ? children : <PageNotFound />}
           </div>
         </Layout>
       </>

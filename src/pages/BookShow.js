@@ -20,7 +20,7 @@ function BookShow() {
 
   const getData = async () => {
     try {
-      dispatch(showLoading);
+      dispatch(showLoading());
       const response = await getShowById(params.id);
       if (response.success) {
         setShow(response.data);

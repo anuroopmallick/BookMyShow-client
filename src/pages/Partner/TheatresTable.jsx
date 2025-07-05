@@ -20,7 +20,7 @@ const TheatresTable = () => {
 
   async function getData() {
     try {
-      dispatch(showLoading);
+      dispatch(showLoading());
       let theatres = await getAllTheatres();
       let data = theatres.data;
       setTheatres(
@@ -31,7 +31,7 @@ const TheatresTable = () => {
           };
         })
       );
-      dispatch(hideLoading);
+      dispatch(hideLoading());
     } catch (error) {
       console.log(error);
     }
