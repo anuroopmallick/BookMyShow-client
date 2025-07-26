@@ -9,8 +9,8 @@ const index = () => {
   const onFinish = async (values) => {
     try {
       const response = await RegisterUser(values);
-      console.log(response);
-      if (response.sussess) {
+
+      if (response.success) {
         messageApi.open({
           type: "success",
           content: response.message,

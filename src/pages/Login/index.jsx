@@ -37,7 +37,7 @@ const Login = () => {
       } else {
         messageApi.open({
           type: "error",
-          content: response.message,
+          content: response.response.data.message,
         });
       }
     } catch (error) {
@@ -68,7 +68,7 @@ const Login = () => {
       <header className="App-header">
         <main className="main-area mw-500 text-center px-3">
           <section className="left-section">
-            <h1>Login to BookMyShow</h1>
+            <h1>Book My Cinema</h1>
           </section>
           <section className="right-section">
             <Form layout="vertical" onFinish={onFinish}>
@@ -109,6 +109,9 @@ const Login = () => {
             <div>
               <p>
                 New User ? <Link to="/register">Register</Link>
+              </p>
+              <p>
+                Forgot Password ? <Link to="/forgotpassword">Click Here</Link>
               </p>
             </div>
           </section>
