@@ -9,7 +9,6 @@ import {
 } from "../../calls/movie";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/loaderSlice";
-import { render } from "@testing-library/react";
 import moment from "moment";
 import MovieForm from "./MovieForm";
 import DeleteMovieModal from "./DeleteMovieModal";
