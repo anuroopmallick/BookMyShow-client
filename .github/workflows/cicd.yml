@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Docker build
+    name: Build React App
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
