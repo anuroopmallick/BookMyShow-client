@@ -22,10 +22,10 @@ jobs:
           node-version: "18"
 
       - name: Install Dependencies
-        uses: npm ci
+        run: npm ci
 
       - name: Run lint
-        uses: npm run lint
+        run: npm run lint
 
       - name: Build project
-        uses: npm run build
+        run: npm run build
